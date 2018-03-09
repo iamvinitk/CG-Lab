@@ -64,7 +64,7 @@ void main(int argc,char** argv)
 	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE |GLUT_DEPTH);
 	glutInitWindowPosition(50,50);
 	glutInitWindowSize(500,500);
-	glutCreateWindow("Spin Cube");
+	glutCreateWindow("Spin the Cube");
 	init();
 	glutDisplayFunc(display);
         glEnable(GL_DEPTH_TEST);
