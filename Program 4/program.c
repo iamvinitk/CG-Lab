@@ -6,19 +6,20 @@
 
 float ver[][3]={{-1,-1,-1},{1,-1,-1},{1,1,-1},{-1,1,-1},{-1,-1,1},{1,-1,1},{1,1,1},{-1,1,1}};
 float theta[]={0,0,0};
+int viewer[3] = {0,0,5};
 int axis=2;
 
 void polygon(int a,int b,int c,int d)
 {
 	//glColor3f(1,0,0);
 	glBegin(GL_POLYGON);
-glColor3f(.5,0,0.6);
+	glColor3f(.5,0,0.6);
 	glVertex3fv(ver[a]);
-glColor3f(1,0.2,0.2);
+	glColor3f(1,0.2,0.2);
 	glVertex3fv(ver[b]);
-glColor3f(1,0.5,0.5);
+	glColor3f(1,0.5,0.5);
 	glVertex3fv(ver[c]);
-glColor3f(1,1,0);
+	glColor3f(1,1,0);
 	glVertex3fv(ver[d]);
 	glEnd();
 }
@@ -50,8 +51,9 @@ void init()
 {
 	//glOrtho(-2,2,-2,2,-10,10);
         glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(-2,2,-2,2,-10,10);
+	//glLoadIdentity();
+	glFrustum(-2, 2, -2, 2, 2, 10);
+	//glOrtho(-2,2,-2,2,-10,10);
 	glMatrixMode(GL_MODELVIEW);
 	//glLoadIdentity();
 }
@@ -61,6 +63,7 @@ void display()
 
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
+	gluLookAt(viewer[0],viewer[1],viewer[2],0,0,0,0,1,0);
 	glRotatef(theta[0],1,0,0);
 	glRotatef(theta[1],0,1,0);
 	glRotatef(theta[2],0,0,1);
@@ -72,7 +75,7 @@ void display()
 }
 
 void spin_cube()
-{
+{	
 	theta[axis]+=1.0;
 	if(theta[axis]>360)
 	{
@@ -89,6 +92,26 @@ void mouse(int btn,int state,int x,int y)
 			axis=2;
 	if(btn==GLUT_MIDDLE_BUTTON && state==GLUT_DOWN)
 			axis=1;
+}
+void keyboard(unsigned char key, int x, int y){
+	if(key == 'x'){
+	viewer[0] -= 1; 	
+	}
+	if(key == 'X'){
+	viewer[0] += 1; 	
+	}
+	if(key == 'y'){
+	viewer[1] -= 1; 	
+	}
+	if(key == 'Y'){
+	viewer[1] += 1; 	
+	}
+	if(key == 'z'){
+	viewer[2] -= 1; 	
+	}
+	if(key == 'Z'){
+	viewer[2] += 1; 	
+	}
 }
 
 /*void reshape(int w,int h)
@@ -108,10 +131,12 @@ void main(int argc,char** argv)
 	glutInitWindowSize(500,500);
 	glutCreateWindow("Spin Cube");
 	init();
+	glutDisplayFunc(display);
 	glutIdleFunc(spin_cube);
 	glutMouseFunc(mouse);
+	glutKeyboardFunc(keyboard);
 	//glutReshapeFunc(reshape);
-	glutDisplayFunc(display);
+	
         glEnable(GL_DEPTH_TEST);
 	glutMainLoop();
 }
