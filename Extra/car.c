@@ -11,8 +11,8 @@ void display()
 	glVertex2i(10,15);
 	glVertex2i(10,30);
 	glVertex2i(30,30);
-    glVertex2i(40,40);
-    glVertex2i(60,40);
+    	glVertex2i(40,40);
+    	glVertex2i(60,40);
 	glVertex2i(70,30);
 	glVertex2i(70,15);
 	glVertex2i(60,15);
