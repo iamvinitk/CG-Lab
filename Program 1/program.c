@@ -48,7 +48,7 @@ void draw_line(int x1,int x2,int y1,int y2)
 		inc2=2*dy;
 		for(int i=0;i<dx;i++)
 		{
-			if(e<0)
+			if(e>=0)
 			{
 				y+=incy;
 				e+=inc1;
@@ -56,6 +56,7 @@ void draw_line(int x1,int x2,int y1,int y2)
 			
 			else 
 				e+=inc2;
+
 				x+=incx;
 				draw_pixel(x,y);
 		}

@@ -29,7 +29,7 @@ int computeoutcode(double x,double y)
 void LineClip(double x0,double y0,double x1,double y1)
 {
   int accept=false;
- int done=false;
+  int done=false;
   outcode0=computeoutcode(x0,y0);
   outcode1=computeoutcode(x1,y1);
   do{
@@ -91,6 +91,8 @@ void LineClip(double x0,double y0,double x1,double y1)
 		   glBegin(GL_LINES);
 		  glVertex2i(x0,y0);
 		  glVertex2i(x1,y1);
+		  glVertex2i(60,20);
+		  glVertex2i(80,120);
 		  glEnd();
 		  glFlush(); 
         }
@@ -112,6 +114,8 @@ void display()
    glBegin(GL_LINES);
   glVertex2i(60,20);
   glVertex2i(80,120);
+  glVertex2i(80,20);
+  glVertex2i(60,120);
   glEnd();
   LineClip(60,20,80,120);
   glFlush(); 
