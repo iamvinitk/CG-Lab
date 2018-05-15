@@ -30,7 +30,7 @@ void table(double topwid,double topthick,double legthick,double leglen)
 	glPopMatrix();
 
 
-double dist=0.95*topwid/2.0-legthick/2.0;
+	double dist=0.95*topwid/2.0-legthick/2.0;
 
 	glPushMatrix();
 	glTranslated(dist,0,dist);
@@ -45,7 +45,7 @@ double dist=0.95*topwid/2.0-legthick/2.0;
 	glTranslated(0,0,-2*dist);
 	tableleg(legthick,leglen);
 
-	
+
 	glPopMatrix();
 }
 
@@ -67,7 +67,7 @@ void display()
 
 	glLightfv(GL_LIGHT0,GL_POSITION,lightposition);
 	glLightfv(GL_LIGHT0,GL_DIFFUSE,lightintensity);
-	
+
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
 	glMatrixMode(GL_PROJECTION);
@@ -77,7 +77,7 @@ void display()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(2,1,3,0,0.25,0,0,1,0);
-	
+
 
 	glPushMatrix();
 	glTranslated(0.4,0.4,0.37);
@@ -99,13 +99,13 @@ void display()
 	glPushMatrix();
 	wall(0.02);
 	glPopMatrix();
-	
+
 
 	glPushMatrix();
 	glRotated(90,0,0,1);
 	wall(0.02);
 	glPopMatrix();
-glFlush();
+	glFlush();
 }
 
 int main(int argc,char** argv)
@@ -121,8 +121,8 @@ int main(int argc,char** argv)
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_DEPTH_TEST);
+
 	glutMainLoop();
 }
