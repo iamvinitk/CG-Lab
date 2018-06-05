@@ -35,22 +35,22 @@ void color_cube()
 	glColor3f(1.0,1.0,1.0);
 	polygon(0,4,7,3);
 
-	glColor3f(1.0,0.0,1.0);	
+	glColor3f(1.0,0.0,1.0);
 	polygon(1,2,6,5);
 
 	glColor3f(0.4,0.6,0.8);
 	polygon(4,5,6,7);
 
-	glColor3f(0.8,0.2,0.1);	
+	glColor3f(0.8,0.2,0.1);
 	polygon(0,1,5,4);
 
-	
+
 }
 
 void init()
 {
 	//glOrtho(-2,2,-2,2,-10,10);
-        glMatrixMode(GL_PROJECTION);
+	glMatrixMode(GL_PROJECTION);
 	//glLoadIdentity();
 	glFrustum(-2, 2, -2, 2, 2, 10);
 	//glOrtho(-2,2,-2,2,-10,10);
@@ -68,14 +68,14 @@ void display()
 	glRotatef(theta[1],0,1,0);
 	glRotatef(theta[2],0,0,1);
 	color_cube();
-	
+
 	glFlush();
 	glutSwapBuffers();
 
 }
 
 void spin_cube()
-{	
+{
 	theta[axis]+=1.0;
 	if(theta[axis]>360)
 	{
@@ -87,42 +87,33 @@ void spin_cube()
 void mouse(int btn,int state,int x,int y)
 {
 	if(btn==GLUT_LEFT_BUTTON && state==GLUT_DOWN)
-		axis=0;
+	axis=0;
 	if(btn==GLUT_RIGHT_BUTTON && state==GLUT_DOWN)
-			axis=2;
+	axis=2;
 	if(btn==GLUT_MIDDLE_BUTTON && state==GLUT_DOWN)
-			axis=1;
+	axis=1;
 }
 void keyboard(unsigned char key, int x, int y){
 	if(key == 'x'){
-	viewer[0] -= 1; 	
+		viewer[0] -= 1;
 	}
 	if(key == 'X'){
-	viewer[0] += 1; 	
+		viewer[0] += 1;
 	}
 	if(key == 'y'){
-	viewer[1] -= 1; 	
+		viewer[1] -= 1;
 	}
 	if(key == 'Y'){
-	viewer[1] += 1; 	
+		viewer[1] += 1;
 	}
 	if(key == 'z'){
-	viewer[2] -= 1; 	
+		viewer[2] -= 1;
 	}
 	if(key == 'Z'){
-	viewer[2] += 1; 	
+		viewer[2] += 1;
 	}
 }
 
-/*void reshape(int w,int h)
-{
-	glViewport(0,0,w,h);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(-2,2,-2,2,-10,10);
-	glMatrixMode(GL_MODELVIEW);
-}
-*/
 void main(int argc,char** argv)
 {
 	glutInit(&argc,argv);
@@ -135,10 +126,7 @@ void main(int argc,char** argv)
 	glutIdleFunc(spin_cube);
 	glutMouseFunc(mouse);
 	glutKeyboardFunc(keyboard);
-	//glutReshapeFunc(reshape);
-	
-        glEnable(GL_DEPTH_TEST);
+
+	glEnable(GL_DEPTH_TEST);
 	glutMainLoop();
 }
-
-

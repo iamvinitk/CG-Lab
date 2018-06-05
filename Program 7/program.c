@@ -3,7 +3,7 @@
 
 float v[4][3]={{1,1,1},{-1,1,-1},{-1,-1,1},{1,-1,-1}};
 
-int m;
+int n;
 
 void init()
 {
@@ -53,29 +53,26 @@ void tetrahedron(int m)
 	dividetriangle(v[0],v[2],v[3],m);
 	glColor3f(1,1,0);
 	dividetriangle(v[1],v[2],v[3],m);
-	
 }
 
 void display()
 {
 	glClearColor(0,0,0,1);
-	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	gluLookAt(2,2,2,1,1,1,0,1,0);
-	
-	tetrahedron(m);
-
+	tetrahedron(n);
 	glFlush();
 }
 
 
 void main(int argc,char **argv)
 {
-	
+
 	glutInit(&argc,argv);
-	glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB|GLUT_DEPTH);
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
 	printf("Enter Level of Sierpinski Gasket: ");
-	scanf("%d",&m);
+	scanf("%d",&n);
 	glutInitWindowPosition(0,0);
 	glutInitWindowSize(600,600);
 	glutCreateWindow("Sierpinski Gasket");

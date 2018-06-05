@@ -12,13 +12,13 @@ void polygon(int a,int b,int c,int d)
 {
 	//glColor3f(1,0,0);
 	glBegin(GL_POLYGON);
-glColor3f(.5,0,0.6);
+	glColor3f(.5,0,0.6);
 	glVertex3fv(ver[a]);
-glColor3f(1,0.2,0.2);
+	glColor3f(1,0.2,0.2);
 	glVertex3fv(ver[b]);
-glColor3f(1,0.5,0.5);
+	glColor3f(1,0.5,0.5);
 	glVertex3fv(ver[c]);
-glColor3f(1,1,0);
+	glColor3f(1,1,0);
 	glVertex3fv(ver[d]);
 	glEnd();
 }
@@ -34,26 +34,24 @@ void color_cube()
 	glColor3f(1.0,1.0,1.0);
 	polygon(0,4,7,3);
 
-	glColor3f(1.0,0.0,1.0);	
+	glColor3f(1.0,0.0,1.0);
 	polygon(1,2,6,5);
 
 	glColor3f(0.4,0.6,0.8);
 	polygon(4,5,6,7);
 
-	glColor3f(0.8,0.2,0.1);	
+	glColor3f(0.8,0.2,0.1);
 	polygon(0,1,5,4);
 
-	
+
 }
 
 void init()
 {
-	//glOrtho(-2,2,-2,2,-10,10);
-        glMatrixMode(GL_PROJECTION);
+	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(-2,2,-2,2,-10,10);
 	glMatrixMode(GL_MODELVIEW);
-	//glLoadIdentity();
 }
 
 void display()
@@ -65,7 +63,7 @@ void display()
 	glRotatef(theta[1],0,1,0);
 	glRotatef(theta[2],0,0,1);
 	color_cube();
-	
+
 	glFlush();
 	glutSwapBuffers();
 
@@ -84,22 +82,13 @@ void spin_cube()
 void mouse(int btn,int state,int x,int y)
 {
 	if(btn==GLUT_LEFT_BUTTON && state==GLUT_DOWN)
-		axis=0;
+	axis=0;
 	if(btn==GLUT_RIGHT_BUTTON && state==GLUT_DOWN)
-			axis=2;
+	axis=2;
 	if(btn==GLUT_MIDDLE_BUTTON && state==GLUT_DOWN)
-			axis=1;
+	axis=1;
 }
 
-/*void reshape(int w,int h)
-{
-	glViewport(0,0,w,h);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(-2,2,-2,2,-10,10);
-	glMatrixMode(GL_MODELVIEW);
-}
-*/
 void main(int argc,char** argv)
 {
 	glutInit(&argc,argv);
@@ -110,10 +99,7 @@ void main(int argc,char** argv)
 	init();
 	glutIdleFunc(spin_cube);
 	glutMouseFunc(mouse);
-	//glutReshapeFunc(reshape);
 	glutDisplayFunc(display);
-        glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 	glutMainLoop();
 }
-
-

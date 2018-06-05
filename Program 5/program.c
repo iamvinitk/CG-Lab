@@ -105,12 +105,14 @@ void display()
   glClearColor(1,1,1,1);
   glClear(GL_COLOR_BUFFER_BIT);
   glColor3f(1.0,0.0,0.0);
+
   glBegin(GL_LINE_LOOP);
   glVertex2i(50,50);
   glVertex2i(100,50);
   glVertex2i(100,100);
   glVertex2i(50,100);
   glEnd();
+
   glColor3f(1.0,0.0,1.0);
   glBegin(GL_LINES);
   glVertex2i(60,20);
@@ -118,13 +120,14 @@ void display()
   glVertex2i(80,20);
   glVertex2i(60,120);
   glEnd();
+  
   LineClip(60,20,80,120);
   LineClip(80,20,60,120);
 
   glFlush();
 }
 
-void myInit()
+void init()
 {
   glMatrixMode(GL_PROJECTION);
   gluOrtho2D(0,300,0,300);
@@ -140,7 +143,7 @@ void main(int argc,char** argv)
   glutInitWindowPosition(0,0);
   glutInitWindowSize(1000,1000);
   glutCreateWindow("clipping");
-  myInit();
+  init();
   glutDisplayFunc(display);
   glutMainLoop();
 }

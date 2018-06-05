@@ -3,15 +3,17 @@
 using namespace std;
 #define PI 3.1416
 
-typedef struct wcPt3D
+int nCtrlPts = 4, nBezCurvePts = 20, flag = 1;
+
+typedef struct bcPoints
 {
 	float x, y, z;
-};
+} bcPoints;
 
-void bino(int n, int *C)
+void bino(int *C)
 {
-	int k, j;
-	for(k=0;k<=n;k++)
+	int k, j, n=nCtrlPts-1;
+	for(k=0;k<nCtrlPts;k++)
 	{
 		C[k]=1;
 		for(j=n;j>=k+1; j--)
@@ -22,12 +24,12 @@ void bino(int n, int *C)
 }
 
 
-void computeBezPt(float u, wcPt3D *bezPt, int nCtrlPts, wcPt3D *ctrlPts, int *C)
+void computeBezPt(float u, bcPoints *bezPt, bcPoints *ctrlPts, int *C)
 {
-	int k, n=nCtrlPts-1;
+	int k, n = nCtrlPts-1;
 	float bezBlendFcn;
 	bezPt ->x =bezPt ->y = bezPt->z=0.0;
-	for(k=0; k< nCtrlPts; k++)
+	for(k=0; k < nCtrlPts; k++)
 	{
 		bezBlendFcn = C[k] * pow(u, k) * pow( 1-u, n-k);
 		bezPt ->x += ctrlPts[k].x * bezBlendFcn;
@@ -35,18 +37,18 @@ void computeBezPt(float u, wcPt3D *bezPt, int nCtrlPts, wcPt3D *ctrlPts, int *C)
 		bezPt ->z += ctrlPts[k].z * bezBlendFcn;
 	}
 }
-void bezier(wcPt3D *ctrlPts, int nCtrlPts, int nBezCurvePts)
+void bezier(bcPoints *ctrlPts)
 {
-	wcPt3D bezCurvePt;
+	bcPoints bezCurvePt;
 	float u;
 	int *C, k;
-	C= new int[nCtrlPts];
-	bino(nCtrlPts-1, C);
+	C = new int[nCtrlPts];
+	bino(C);
 	glBegin(GL_LINE_STRIP);
 	for(k=0; k<=nBezCurvePts; k++)
 	{
-		u=float(k)/float(nBezCurvePts);
-		computeBezPt(u, &bezCurvePt, nCtrlPts, ctrlPts, C);
+		u = float(k)/float(nBezCurvePts);
+		computeBezPt(u, &bezCurvePt, ctrlPts, C);
 		glVertex2f(bezCurvePt.x, bezCurvePt.y);
 	}
 	glEnd();
@@ -55,27 +57,28 @@ void bezier(wcPt3D *ctrlPts, int nCtrlPts, int nBezCurvePts)
 
 void displayFcn()
 {
-	int nCtrlPts = 4, nBezCurvePts =20;
 	printf("display called\n");
 	static float theta = 0;
-	wcPt3D ctrlPts[4] = {
+	bcPoints ctrlPts[4] = {
 		{20, 100, 0},
 		{30, 110, 0},
 		{50, 90, 0},
 		{60, 100, 0}
 	};
-	ctrlPts[1].x +=10*sin(theta * PI/180.0);
-	ctrlPts[1].y +=5*sin(theta * PI/180.0);
+
+	ctrlPts[1].x += 10*sin(theta * PI/180.0);
+	ctrlPts[1].y += 5*sin(theta * PI/180.0);
 	ctrlPts[2].x -= 10*sin((theta+30) * PI/180.0);
 	ctrlPts[2].y -= 10*sin((theta+30) * PI/180.0);
 	ctrlPts[3].x -= 4*sin((theta) * PI/180.0);
 	ctrlPts[3].y += sin((theta-30) * PI/180.0);
 	printf("%f\n", theta);
-	theta+=0.8;
+	theta+=20.0;
 
 	glClear(GL_COLOR_BUFFER_BIT);
 	glColor3f(1.0, 1.0, 1.0);
 	glPointSize(5);
+
 	glPushMatrix();
 	glLineWidth(5);
 
@@ -83,22 +86,21 @@ void displayFcn()
 	for(int i=0;i<8;i++)
 	{
 		glTranslatef(0, -0.8, 0);
-		bezier(ctrlPts, nCtrlPts, nBezCurvePts);
+		bezier(ctrlPts);
 	}
 
 	glColor3f(1, 1, 1);
 	for(int i=0;i<8;i++)
 	{
 		glTranslatef(0, -0.8, 0);
-		bezier(ctrlPts, nCtrlPts, nBezCurvePts);
+		bezier(ctrlPts);
 	}
-
 
 	glColor3f(19/255.0, 136/255.0, 8/255.0);
 	for(int i=0;i<8;i++)
 	{
 		glTranslatef(0, -0.8, 0);
-		bezier(ctrlPts, nCtrlPts, nBezCurvePts);
+		bezier(ctrlPts);
 	}
 
 	glPopMatrix();
@@ -109,8 +111,12 @@ void displayFcn()
 	glVertex2f(20,40);
 	glEnd();
 	glFlush();
-	glutPostRedisplay();
-	glutSwapBuffers();
+
+	if(flag == 1){
+		glutPostRedisplay();
+		glutSwapBuffers();
+
+	}
 }
 
 void winReshapeFun(int w, int h)
@@ -122,6 +128,19 @@ void winReshapeFun(int w, int h)
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
+void animateMenu(int id){
+	if(id==1){
+		flag = 1;
+	}
+	else if (id == 2){
+		flag = 0;
+	}
+	else{
+		exit(0);
+	}
+	glutPostRedisplay();
+}
+
 int main(int argc, char **argv)
 {
 	glutInit(&argc, argv);
@@ -131,6 +150,11 @@ int main(int argc, char **argv)
 	glutCreateWindow("Bezier Curve");
 	glutDisplayFunc(displayFcn);
 	glutReshapeFunc(winReshapeFun);
+	glutCreateMenu(animateMenu);
+	glutAddMenuEntry("Animate",1);
+	glutAddMenuEntry("Stop",2);
+	glutAddMenuEntry("Quit",3);
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
 	glutMainLoop();
 	return 0;
 }

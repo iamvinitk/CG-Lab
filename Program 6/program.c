@@ -1,4 +1,4 @@
-#include<GL/gl.h>
+ #include<GL/gl.h>
 #include<stdio.h>
 #include<GL/glut.h>
 
@@ -33,6 +33,7 @@ void table(double topwid,double topthick,double legthick,double leglen)
 	double dist=0.95*topwid/2.0-legthick/2.0;
 
 	glPushMatrix();
+
 	glTranslated(dist,0,dist);
 	tableleg(legthick,leglen);
 
